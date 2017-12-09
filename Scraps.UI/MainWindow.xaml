@@ -9,7 +9,7 @@
 		xmlns:controls="clr-namespace:Scraps.UI.Controls"
 		mc:Ignorable="d"
 		Height="500"
-		Width="600"
+		Width="800"
 		MinWidth="700"
 		MinHeight="500"
         Title="Picture Manager" WindowStartupLocation="CenterScreen">

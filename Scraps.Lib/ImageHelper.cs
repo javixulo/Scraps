@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Encoder = System.Drawing.Imaging.Encoder;
 
 namespace Scraps.Lib
 {
@@ -33,7 +35,7 @@ namespace Scraps.Lib
 		public static BitmapImage GetImage(string file)
 		{
 			Image image = Image.FromFile(file);
-			
+
 			Rotate(image);
 
 			image = image.GetThumbnailImage(300, 300, () => false, IntPtr.Zero);
@@ -46,10 +48,10 @@ namespace Scraps.Lib
 				bitMap.BeginInit();
 				bitMap.CacheOption = BitmapCacheOption.OnLoad;
 				bitMap.UriSource = null;
-				
+
 				bitMap.StreamSource = memStream2;
 				bitMap.EndInit();
-				
+
 			}
 			return bitMap;
 		}
@@ -58,10 +60,12 @@ namespace Scraps.Lib
 		{
 			Image image = Image.FromFile(file);
 
-			image = image.GetThumbnailImage((int)width, (int)height, null, IntPtr.Zero);
-			
+			image = resizeImage(image, (int) width, (int) height);
+
+		//	image = image.GetThumbnailImage((int)width, (int)height, null, IntPtr.Zero);
+
 			Rotate(image);
-			
+
 			var bitMap = new BitmapImage();
 			using (MemoryStream memStream2 = new MemoryStream())
 			{
@@ -120,18 +124,151 @@ namespace Scraps.Lib
 					break;
 			}
 		}
-	}
 
-	public enum ExifOrientations
-	{
-		Unknown = 0,
-		TopLeft = 1,
-		TopRight = 2,
-		BottomRight = 3,
-		BottomLeft = 4,
-		LeftTop = 5,
-		RightTop = 6,
-		RightBottom = 7,
-		LeftBottom = 8,
+		static float imageResolution = 72;
+
+		//set the compression level. higher compression = better quality = bigger images
+		static long compressionLevel = 80L;
+
+		public static Image resizeImage(Image image, int maxWidth, int maxHeight)
+		{
+			int newWidth;
+			int newHeight;
+
+			//first we check if the image needs rotating (eg phone held vertical when taking a picture for example)
+			foreach (var prop in image.PropertyItems)
+			{
+				if (prop.Id == 0x0112)
+				{
+					int orientationValue = image.GetPropertyItem(prop.Id).Value[0];
+					RotateFlipType rotateFlipType = getRotateFlipType(orientationValue);
+					image.RotateFlip(rotateFlipType);
+					break;
+				}
+			}
+
+			//apply the padding to make a square image
+
+			//check if the with or height of the image exceeds the maximum specified, if so calculate the new dimensions
+			if (image.Width > maxWidth || image.Height > maxHeight)
+			{
+				double ratioX = (double)maxWidth / image.Width;
+				double ratioY = (double)maxHeight / image.Height;
+				double ratio = Math.Min(ratioX, ratioY);
+
+				newWidth = (int)(image.Width * ratio);
+				newHeight = (int)(image.Height * ratio);
+			}
+			else
+			{
+				newWidth = image.Width;
+				newHeight = image.Height;
+			}
+
+			//start the resize with a new image
+			Bitmap newImage = new Bitmap(newWidth, newHeight);
+
+			//set the new resolution
+			newImage.SetResolution(imageResolution, imageResolution);
+
+			//start the resizing
+			using (var graphics = Graphics.FromImage(newImage))
+			{
+				//set some encoding specs
+				graphics.CompositingMode = CompositingMode.SourceCopy;
+				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+				graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+			}
+
+			//save the image to a memorystream to apply the compression level
+			using (MemoryStream ms = new MemoryStream())
+			{
+				EncoderParameters encoderParameters = new EncoderParameters(1);
+				encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, compressionLevel);
+
+				newImage.Save(ms, getEncoderInfo("image/jpeg"), encoderParameters);
+
+				//save the image as byte array here if you want the return type to be a Byte Array instead of Image
+				//byte[] imageAsByteArray = ms.ToArray();
+			}
+
+			//return the image
+			return newImage;
+		}
+
+
+
+		//=== get encoder info
+		private static ImageCodecInfo getEncoderInfo(string mimeType)
+		{
+			ImageCodecInfo[] encoders = ImageCodecInfo.GetImageEncoders();
+
+			for (int j = 0; j < encoders.Length; ++j)
+			{
+				if (encoders[j].MimeType.ToLower() == mimeType.ToLower())
+				{
+					return encoders[j];
+				}
+			}
+
+			return null;
+		}
+
+
+		//=== determine image rotation
+		private static RotateFlipType getRotateFlipType(int rotateValue)
+		{
+			RotateFlipType flipType = RotateFlipType.RotateNoneFlipNone;
+
+			switch (rotateValue)
+			{
+				case 1:
+					flipType = RotateFlipType.RotateNoneFlipNone;
+					break;
+				case 2:
+					flipType = RotateFlipType.RotateNoneFlipX;
+					break;
+				case 3:
+					flipType = RotateFlipType.Rotate180FlipNone;
+					break;
+				case 4:
+					flipType = RotateFlipType.Rotate180FlipX;
+					break;
+				case 5:
+					flipType = RotateFlipType.Rotate90FlipX;
+					break;
+				case 6:
+					flipType = RotateFlipType.Rotate90FlipNone;
+					break;
+				case 7:
+					flipType = RotateFlipType.Rotate270FlipX;
+					break;
+				case 8:
+					flipType = RotateFlipType.Rotate270FlipNone;
+					break;
+				default:
+					flipType = RotateFlipType.RotateNoneFlipNone;
+					break;
+			}
+
+			return flipType;
+		}
+
+		public enum ExifOrientations
+		{
+			Unknown = 0,
+			TopLeft = 1,
+			TopRight = 2,
+			BottomRight = 3,
+			BottomLeft = 4,
+			LeftTop = 5,
+			RightTop = 6,
+			RightBottom = 7,
+			LeftBottom = 8,
+		}
 	}
 }

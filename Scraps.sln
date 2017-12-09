@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraps.UI", "Scraps.UI\Scraps.UI.csproj", "{9190B972-4DFA-4C0A-A220-BC766857E5DE}"
 EndProject
@@ -95,5 +95,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2D920AC6-68F9-4A50-865A-AABEEBC4C979} = {4FB1E41E-F17D-417E-8166-7DBB7A3FAFA4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {930977FD-070C-4AA1-BF38-4B3265E232B3}
 	EndGlobalSection
 EndGlobal
