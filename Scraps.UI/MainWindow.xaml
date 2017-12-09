@@ -1,0 +1,69 @@
+﻿<wpfToolkit:BaseWindow x:Class="Scraps.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpfToolkit="clr-namespace:JX.WPFToolkit.Windows;assembly=JX.WPFToolkit"
+		xmlns:toolsControls="clr-namespace:Scraps.UI.ToolsControls"
+		xmlns:settingsControls="clr-namespace:Scraps.UI.SettingsControls"
+		xmlns:controls="clr-namespace:Scraps.UI.Controls"
+		mc:Ignorable="d"
+		Height="500"
+		Width="600"
+		MinWidth="700"
+		MinHeight="500"
+        Title="Picture Manager" WindowStartupLocation="CenterScreen">
+
+	<Window.Resources>
+		<ResourceDictionary Source="Dictionary.xaml" />
+	</Window.Resources>
+
+	<Grid Background="White">
+
+		<TabControl  TabStripPlacement="Left">
+
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel>
+						<!--<Image Height="64" Width="64" Source="{StaticResource ImageContract}" />-->
+						<Label Content="Main" />
+					</StackPanel>
+				</TabItem.Header>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					
+					<controls:FileListControl x:Name="FileListControl"/>
+					
+					<controls:ImageControl Grid.Column="1"
+										   ImagePath="{Binding SelectedImage, ElementName=FileListControl, Mode=TwoWay}" />
+				</Grid>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel>
+						<!--<Image Height="64" Width="64" Source="{StaticResource ImageContract}" />-->
+						<Label Content="Tools" />
+					</StackPanel>
+				</TabItem.Header>
+				<toolsControls:ToolsControl />
+
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel>
+						<Label Content="Settings" />
+					</StackPanel>
+				</TabItem.Header>
+
+				<settingsControls:SettingsControl />
+
+			</TabItem>
+		</TabControl>
+	</Grid>
+</wpfToolkit:BaseWindow>
