@@ -36,6 +36,7 @@ namespace Scraps.Lib
 			
 			Rotate(image);
 
+			image = image.GetThumbnailImage(300, 300, () => false, IntPtr.Zero);
 
 			var bitMap = new BitmapImage();
 			using (MemoryStream memStream2 = new MemoryStream())
@@ -57,6 +58,7 @@ namespace Scraps.Lib
 		{
 			Image image = Image.FromFile(file);
 
+			image = image.GetThumbnailImage((int)width, (int)height, null, IntPtr.Zero);
 			
 			Rotate(image);
 			
