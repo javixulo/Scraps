@@ -6,6 +6,7 @@
         xmlns:wpfToolkit="clr-namespace:JX.WPFToolkit.Windows;assembly=JX.WPFToolkit"
 		xmlns:toolsControls="clr-namespace:Scraps.UI.ToolsControls"
 		xmlns:settingsControls="clr-namespace:Scraps.UI.SettingsControls"
+		xmlns:eventsControls="clr-namespace:Scraps.UI.EventsControls"
 		xmlns:controls="clr-namespace:Scraps.UI.Controls"
 		mc:Ignorable="d"
 		Height="500"
@@ -31,16 +32,37 @@
 				</TabItem.Header>
 
 				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					
+
 					<controls:FileListControl x:Name="FileListControl"/>
-					
+
 					<controls:ImageControl Grid.Column="1"
 										   ImagePath="{Binding SelectedImage, ElementName=FileListControl, Mode=TwoWay}" />
+					
+					<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+						<Button Content="boton 1"/>
+					</StackPanel>
 				</Grid>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<StackPanel>
+						<!--<Image Height="64" Width="64" Source="{StaticResource ImageContract}" />-->
+						<Label Content="Events" />
+					</StackPanel>
+				</TabItem.Header>
+				
+				<eventsControls:EventTypesControl />
+
 			</TabItem>
 
 			<TabItem>

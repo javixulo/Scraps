@@ -34,6 +34,7 @@ namespace Scraps.UI.Controls
 
 			PicManagerContext picManagerContext = (Application.Current as App).Context;
 
+
 			foreach (IncludedFolder folder in picManagerContext.IncludedFolder)
 			{
 				var files = FileHelper.GetFiles(fileSystem, folder.Path, SearchPatterns, picManagerContext.ExcludedFolder.Select(x => x.Path));

@@ -21,9 +21,7 @@ namespace Scraps.UI.Controls
 			var imageControl = (ImageControl)dependencyObject;
 
 			var bmImg = ImageHelper.GetImage(eventArgs.NewValue.ToString(), imageControl.Height, imageControl.Width);
-
 			
-
 			imageControl.Image.Source = bmImg;
 		}
 		

@@ -25,7 +25,8 @@
 
 		<DataGrid Name="FileList" SelectionMode="Extended" 
 		          ItemsSource="{Binding Source={StaticResource source}}"
-				  AutoGenerateColumns="False" CanUserAddRows="False">
+				  AutoGenerateColumns="False" CanUserAddRows="False"
+				  SelectionUnit="FullRow">
 			
 			<DataGrid.Columns>
 				<DataGridCheckBoxColumn Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Header="" Width="30"  IsThreeState="False" />

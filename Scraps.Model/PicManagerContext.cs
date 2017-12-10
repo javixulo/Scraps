@@ -33,9 +33,10 @@ namespace Scraps.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 			//optionsBuilder.UseSqlite(@"Datasource=E:\Dropbox\Proyectos\VisualStudio\Scraps\DB\picManagarDB_test.db");
 			optionsBuilder.UseSqlite(_connectionString);
+	        SQLitePCL.Batteries_V2.Init();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
