@@ -18,7 +18,7 @@ namespace Scraps.Lib
 		public const int OrientationId = 0x0112;
 
 
-		public static ExifOrientations ImageOrientation(System.Drawing.Image img)
+		public static ExifOrientations ImageOrientation(Image img)
 		{
 			// Get the index of the orientation property.
 			int orientationIndex = Array.IndexOf(img.PropertyIdList, OrientationId);

@@ -42,7 +42,7 @@ namespace Scraps.UI.SettingsControls
 			{
 				DBFile.Text = dialog.FileName;
 				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				config.ConnectionStrings.ConnectionStrings[1].ConnectionString = string.Format("Data Source={0}", dialog.FileName);
+				config.ConnectionStrings.ConnectionStrings[1].ConnectionString = $"Data Source={dialog.FileName}";
 				config.Save(ConfigurationSaveMode.Modified, true);
 				ConfigurationManager.RefreshSection("connectionStrings");
 			}
