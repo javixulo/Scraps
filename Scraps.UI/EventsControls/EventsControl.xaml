@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
+			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+			 Loaded="OnLoaded">
 
 	<UserControl.Resources>
 
@@ -14,11 +16,46 @@
 				<ResourceDictionary Source="../Dictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 
-			<!--<CollectionViewSource x:Key="source" d:DesignSource="{d:DesignInstance {x:Type controls:FileDetails}, CreateList=True}"/>-->
+			<CollectionViewSource x:Key="source" d:DesignSource="{d:DesignInstance {x:Type DataModel:Event}, CreateList=True}"/>
 		</ResourceDictionary>
 
 	</UserControl.Resources>
+
+
+
 	<Grid>
-            
-    </Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<DataGrid x:Name="eventsDataGrid" 
+		          ItemsSource="{Binding Source={StaticResource source}}"
+		          AutoGenerateColumns="False"
+				  CanUserAddRows="False"
+				  CanUserDeleteRows="True">
+
+			<DataGrid.Columns>
+				<DataGridTextColumn  Width="*" Header="Name" Binding="{Binding Name}"/>
+				<DataGridTextColumn  Width="*" Header="Start Date" Binding="{Binding StartDate}"/>
+				<DataGridTextColumn  Width="*" Header="End Date" Binding="{Binding EndDate}"/>
+				<DataGridTemplateColumn Header="Delete">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button
+									Content="X"
+									Click="OnDelete"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<StackPanel Grid.Row="1" Orientation="Horizontal">
+			<!--<TextBox Name="NameBox" Width="100"/>-->
+			<Button Content="New" Click="OnAddClick"/>
+		</StackPanel>
+	</Grid>
+	
 </UserControl>

@@ -280,6 +280,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EventsControls\EventControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EventsControls\EventWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingsControls\FoldersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -325,6 +333,12 @@
     </Compile>
     <Compile Include="EventsControls\EventTypesControl.xaml.cs">
       <DependentUpon>EventTypesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventsControls\EventControl.xaml.cs">
+      <DependentUpon>EventControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventsControls\EventWindow.xaml.cs">
+      <DependentUpon>EventWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsControls\FoldersControl.xaml.cs">
       <DependentUpon>FoldersControl.xaml</DependentUpon>

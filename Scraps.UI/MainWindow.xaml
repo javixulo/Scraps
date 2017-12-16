@@ -61,7 +61,7 @@
 					</StackPanel>
 				</TabItem.Header>
 				
-				<eventsControls:EventTypesControl />
+				<eventsControls:EventsControl />
 
 			</TabItem>
 
