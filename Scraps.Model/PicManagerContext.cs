@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Scraps.Model
 {
@@ -21,8 +19,6 @@ namespace Scraps.Model
         public virtual DbSet<Tag> Tag { get; set; }
 
 		// Unable to generate entity type for table 'Settings'. Please see the warning messages.
-		// Unable to generate entity type for table 'ExcludeFolder'. Please see the warning messages.
-		// Unable to generate entity type for table 'InputFolder'. Please see the warning messages.
 
 		private string _connectionString;
 
@@ -59,7 +55,6 @@ namespace Scraps.Model
             modelBuilder.Entity<EventTyped>(entity =>
             {
 				entity.HasKey(e => new { e.Event, e.Type });
-                  //  .HasName("sqlite_autoindex_EventTyped_1");
 
                 entity.HasOne(d => d.EventNavigation)
                     .WithMany(p => p.EventTyped)

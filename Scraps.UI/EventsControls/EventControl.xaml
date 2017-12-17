@@ -51,7 +51,7 @@
 				</Grid.RowDefinitions>
 				
 				<Label Content="Types:"/>
-				<local:EventTypesControl x:Name="TypesGrid" Grid.Row="2"/>
+				<local:EventTypesControl x:Name="TypesGrid" Grid.Row="2" Loaded="OnTypesGridLoaded"/>
 			</Grid>
 
 		</StackPanel>
