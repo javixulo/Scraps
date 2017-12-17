@@ -7,6 +7,7 @@
 			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
+			 Height="Auto" Width="Auto"
 			 Loaded="OnLoaded">
 
 	<UserControl.Resources>
@@ -33,8 +34,8 @@
 		<DataGrid x:Name="eventsDataGrid" 
 		          ItemsSource="{Binding Source={StaticResource source}}"
 		          AutoGenerateColumns="False"
-				  CanUserAddRows="False"
-				  CanUserDeleteRows="True">
+				  MouseDoubleClick="EventDoubleClick" CanUserAddRows="False"
+				  IsReadOnly="True">
 
 			<DataGrid.Columns>
 				<DataGridTextColumn  Width="*" Header="Name" Binding="{Binding Name}"/>

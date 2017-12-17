@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Scraps.Model
 {
@@ -10,6 +11,7 @@ namespace Scraps.Model
             EventTyped = new HashSet<EventTyped>();
         }
 
+		[Key]
         public string Name { get; set; }
 
         public virtual ICollection<EventTyped> EventTyped { get; set; }

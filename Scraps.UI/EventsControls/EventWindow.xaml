@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scraps.UI.EventsControls"
         mc:Ignorable="d"
-        Title="EventWindow" Height="300" Width="300"
+        Title="EventWindow" Height="600" Width="600"
 		d:DataContext="{d:DesignInstance Type=local:EventWindow}"
 		DataContext="{Binding RelativeSource={RelativeSource Self}}">
 

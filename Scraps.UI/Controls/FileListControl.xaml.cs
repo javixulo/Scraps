@@ -47,7 +47,9 @@ namespace Scraps.UI.Controls
 
 		private void FileListOnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
 		{
-		//	SelectedImage = ((FileDetails)FileList.SelectedItem).FullName;
+			//	SelectedImage = ((FileDetails)FileList.SelectedItem).FullName;
+			if (FileList.SelectedItem == null)
+				return;
 
 			SetCurrentValue(SelectedImageProperty, ((FileDetails)FileList.SelectedItem).FullName);
 

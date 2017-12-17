@@ -58,8 +58,8 @@ namespace Scraps.Model
 
             modelBuilder.Entity<EventTyped>(entity =>
             {
-                entity.HasKey(e => new { e.Event, e.Type })
-                    .HasName("sqlite_autoindex_EventTyped_1");
+				entity.HasKey(e => new { e.Event, e.Type });
+                  //  .HasName("sqlite_autoindex_EventTyped_1");
 
                 entity.HasOne(d => d.EventNavigation)
                     .WithMany(p => p.EventTyped)

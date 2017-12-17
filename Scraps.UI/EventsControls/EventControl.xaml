@@ -6,9 +6,11 @@
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
 			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+			 Height="Auto" Width="Auto"
+             d:DesignHeight="500" d:DesignWidth="500"
 			 d:DataContext="{d:DesignInstance Type=local:EventControl}"
-			 DataContext="{Binding RelativeSource={RelativeSource Self}}">
+			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
+			 Loaded="OnLoaded">
 
 	<UserControl.Resources>
 
@@ -41,7 +43,17 @@
 				<Label Content="End Date:"/>
 				<DatePicker SelectedDate="{Binding Event.EndDate}" />
 			</StackPanel>
-			
+
+			<Grid >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				
+				<Label Content="Types:"/>
+				<local:EventTypesControl x:Name="TypesGrid" Grid.Row="2"/>
+			</Grid>
+
 		</StackPanel>
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal">

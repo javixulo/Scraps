@@ -20,6 +20,9 @@ namespace Scraps.UI.EventsControls
 
 			PicManagerContext context = (Application.Current as App).Context;
 
+			context.EventTyped.Load();
+			context.EventType.Load();
+
 			context.Event.Load();
 
 			viewSource.Source = context.Event.Local.ToObservableCollection();
@@ -42,6 +45,17 @@ namespace Scraps.UI.EventsControls
 		private void OnAddClick(object sender, RoutedEventArgs e)
 		{
 			EventWindow window = new EventWindow();
+			window.ShowDialog();
+		}
+
+		private void EventDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			Event item = eventsDataGrid.SelectedValue as Event;
+
+			if (item == null)
+				return;
+
+			EventWindow window = new EventWindow { Event = item };
 			window.ShowDialog();
 		}
 	}

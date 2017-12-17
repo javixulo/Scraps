@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Scraps.Model
 {
@@ -11,7 +12,8 @@ namespace Scraps.Model
             PictureEvent = new HashSet<PictureEvent>();
         }
 
-        public long Id { get; set; }
+		[Key]
+		public long Id { get; set; }
         public string Name { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
