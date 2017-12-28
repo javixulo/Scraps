@@ -8,7 +8,8 @@
 		xmlns:settingsControls="clr-namespace:Scraps.UI.SettingsControls"
 		xmlns:eventsControls="clr-namespace:Scraps.UI.EventsControls"
 		xmlns:controls="clr-namespace:Scraps.UI.Controls"
-		mc:Ignorable="d"
+					   xmlns:picturescontrols="clr-namespace:Scraps.UI.PicturesControls"
+					   mc:Ignorable="d"
 		Height="500"
 		Width="800"
 		MinWidth="700"
@@ -38,14 +39,16 @@
 					</Grid.RowDefinitions>
 					
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<controls:FileListControl x:Name="FileListControl"/>
+					<!--<controls:FileListControl x:Name="FileListControl" Loaded="OnFileListControlLoaded"/>-->
+
+					<picturescontrols:PicturesControl x:Name="PicturesControl" Loaded="OnPicturesControlLoaded"/>
 
 					<controls:ImageControl Grid.Column="1"
-										   ImagePath="{Binding SelectedImage, ElementName=FileListControl, Mode=TwoWay}" />
+										   ImagePath="{Binding SelectedImage, ElementName=PicturesControl, Mode=TwoWay}" />
 					
 					<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
 						<Button Content="boton 1"/>

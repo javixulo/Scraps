@@ -1,0 +1,35 @@
+﻿<Window x:Class="Scraps.UI.PicturesControls.PicturesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Scraps.UI.PicturesControls"
+        mc:Ignorable="d"
+        Title="PicturesWindow" Height="300" Width="300">
+
+	<Window.Resources>
+
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../Dictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+
+		</ResourceDictionary>
+
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<local:PicturesControl x:Name="PicturesControl" Loaded="OnPicturesControlLoaded"/>
+
+		<StackPanel Grid.Row="1" Orientation="Horizontal">
+
+			<Button Content="OK" Click="OKClick"/>
+			<Button Content="Cancel" Click="CancelClick"/>
+		</StackPanel>
+	</Grid>
+</Window>

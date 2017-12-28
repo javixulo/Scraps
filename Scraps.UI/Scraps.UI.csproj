@@ -288,6 +288,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PicturesControls\PicturesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PicturesControls\PicturesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingsControls\FoldersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -339,6 +347,12 @@
     </Compile>
     <Compile Include="EventsControls\EventWindow.xaml.cs">
       <DependentUpon>EventWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PicturesControls\PicturesControl.xaml.cs">
+      <DependentUpon>PicturesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PicturesControls\PicturesWindow.xaml.cs">
+      <DependentUpon>PicturesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsControls\FoldersControl.xaml.cs">
       <DependentUpon>FoldersControl.xaml</DependentUpon>

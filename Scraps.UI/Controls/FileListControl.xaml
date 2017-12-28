@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Scraps.UI.SettingsControls"
+             xmlns:local="clr-namespace:Scraps.UI.Controls"
              xmlns:model="clr-namespace:Scraps.Model;assembly=Scraps.Model"
-             xmlns:controls="clr-namespace:Scraps.UI.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+			 d:DataContext="{d:DesignInstance Type=local:FileListControl}"
+			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="300" d:DesignWidth="300"
+	>
 
 	<UserControl.Resources>
 
@@ -16,17 +18,18 @@
 				<ResourceDictionary Source="../Dictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 
-			<CollectionViewSource x:Key="source" d:DesignSource="{d:DesignInstance {x:Type controls:FileDetails}, CreateList=True}"/>
 		</ResourceDictionary>
 
 	</UserControl.Resources>
 
 	<Grid>
 
-		<DataGrid Name="FileList" SelectionMode="Extended" 
-		          ItemsSource="{Binding Source={StaticResource source}}"
+		<DataGrid Name="FileListGrid" SelectionMode="Extended" 
+				  
+		          ItemsSource="{Binding FileList}"
 				  AutoGenerateColumns="False" CanUserAddRows="False"
-				  SelectionUnit="FullRow">
+				  SelectionUnit="FullRow"
+				  SelectionChanged="FileListOnSelectionChanged">
 			
 			<DataGrid.Columns>
 				<DataGridCheckBoxColumn Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Header="" Width="30"  IsThreeState="False" />

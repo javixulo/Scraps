@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -12,8 +11,6 @@ namespace Scraps.UI.EventsControls
 {
 	public partial class EventTypesControl : UserControl
 	{
-		
-
 		public EventTypesControl()
 		{
 			InitializeComponent();
@@ -27,7 +24,6 @@ namespace Scraps.UI.EventsControls
 			{
 				eventTypesDataGrid.SelectedItems.Add(item);
 			}
-
 		}
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
@@ -47,8 +43,8 @@ namespace Scraps.UI.EventsControls
 
 			if (selected == null)
 				return;
-			(Application.Current as App).Context.EventType.Remove(selected);
 
+			(Application.Current as App).Context.EventType.Remove(selected);
 			(Application.Current as App).Context.SaveChanges();
 		}
 

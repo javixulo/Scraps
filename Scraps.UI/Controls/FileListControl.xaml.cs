@@ -13,47 +13,34 @@ namespace Scraps.UI.Controls
 	public partial class FileListControl : INotifyPropertyChanged
 	{
 		private static readonly string[] SearchPatterns = { ".png", ".jpg", ".jpeg" };
-		
+
 		public static readonly DependencyProperty SelectedImageProperty = DependencyProperty.Register("SelectedImage", typeof(string), typeof(FileListControl));
 
 		public string SelectedImage
 		{
-			get => (string) GetValue(SelectedImageProperty);
+			get => (string)GetValue(SelectedImageProperty);
 			set => SetValue(SelectedImageProperty, value);
+		}
+
+		public static readonly DependencyProperty FileListProperty = DependencyProperty.Register("FileList", typeof(IEnumerable<FileDetails>), typeof(FileListControl));
+
+		public IEnumerable<FileDetails> FileList
+		{
+			get => (IEnumerable<FileDetails>)GetValue(FileListProperty);
+			set => SetValue(FileListProperty, value);
 		}
 
 		public FileListControl()
 		{
 			InitializeComponent();
-
-			var viewSource = (CollectionViewSource)FindResource("source");
-			var list = new List<FileDetails>();
-			FileList.SelectionChanged += FileListOnSelectionChanged;
-
-			IFileSystem fileSystem = new FileSystem();
-
-			PicManagerContext picManagerContext = (Application.Current as App).Context;
-
-
-			foreach (IncludedFolder folder in picManagerContext.IncludedFolder)
-			{
-				var files = FileHelper.GetFiles(fileSystem, folder.Path, SearchPatterns, picManagerContext.ExcludedFolder.Select(x => x.Path));
-
-				list.AddRange(files.Select(file => new FileDetails(file)));
-			}
-
-			viewSource.Source = list;
 		}
 
 		private void FileListOnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
 		{
-			//	SelectedImage = ((FileDetails)FileList.SelectedItem).FullName;
-			if (FileList.SelectedItem == null)
+			if (FileListGrid.SelectedItem == null)
 				return;
 
-			SetCurrentValue(SelectedImageProperty, ((FileDetails)FileList.SelectedItem).FullName);
-
-		//	NotifyPropertyChanged(nameof(SelectedImage));
+			SetCurrentValue(SelectedImageProperty, ((FileDetails)FileListGrid.SelectedItem).FullName);
 		}
 
 		#region INotifyPropertyChanged
@@ -64,8 +51,9 @@ namespace Scraps.UI.Controls
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-		
+
 		#endregion
+
 	}
 
 	public class FileDetails

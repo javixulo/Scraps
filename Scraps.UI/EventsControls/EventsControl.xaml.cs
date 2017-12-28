@@ -22,6 +22,8 @@ namespace Scraps.UI.EventsControls
 
 			context.EventTyped.Load();
 			context.EventType.Load();
+			context.Picture.Load();
+			context.PictureEvent.Load();
 
 			context.Event.Load();
 
