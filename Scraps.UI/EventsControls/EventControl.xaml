@@ -51,14 +51,25 @@
 				<DatePicker SelectedDate="{Binding Event.EndDate}" />
 			</StackPanel>
 
-			<Grid >
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-				
-				<Label Content="Types:"/>
-				<local:EventTypesControl x:Name="TypesGrid" Grid.Row="2" Loaded="OnTypesGridLoaded"/>
+			<Grid>
+
+				<GroupBox Header="Types">
+					<Grid >
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="auto" />
+						</Grid.RowDefinitions>
+
+						<controls:TagPanel x:Name="TypesPanel" Grid.Row="0" Loaded="OnTypesPanelLoaded" />
+
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Button Content="Add"  Click="OnAddTypeClick" />
+
+						</StackPanel>
+					</Grid>
+				</GroupBox>
+
+
 			</Grid>
 
 		</StackPanel>
@@ -73,7 +84,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
-			
+
 			<picturescontrols:PicturesControl  x:Name="PicturesControl"/>
 
 			<StackPanel Grid.Row="1" Orientation="Horizontal">

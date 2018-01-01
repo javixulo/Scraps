@@ -268,6 +268,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\TagControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TagPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EventsControls\EventListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -281,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EventsControls\EventControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EventsControls\EventTypesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,6 +345,12 @@
     <Compile Include="Controls\ImagesGridControl.xaml.cs">
       <DependentUpon>ImagesGridControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TagControl.xaml.cs">
+      <DependentUpon>TagControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TagPanel.xaml.cs">
+      <DependentUpon>TagPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EventsControls\EventListControl.xaml.cs">
       <DependentUpon>EventListControl.xaml</DependentUpon>
     </Compile>
@@ -344,6 +362,9 @@
     </Compile>
     <Compile Include="EventsControls\EventControl.xaml.cs">
       <DependentUpon>EventControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventsControls\EventTypesWindow.xaml.cs">
+      <DependentUpon>EventTypesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventsControls\EventWindow.xaml.cs">
       <DependentUpon>EventWindow.xaml</DependentUpon>
