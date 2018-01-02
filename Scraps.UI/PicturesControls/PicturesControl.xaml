@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Scraps.UI.PicturesControls"
              xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
+			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="300" d:DesignWidth="300"
 			 d:DataContext="{d:DesignInstance Type=local:PicturesControl}"
 			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -18,12 +21,66 @@
 				<ResourceDictionary Source="../Dictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-		
+
 	</UserControl.Resources>
 
 	<Grid>
 
-		<ListView x:Name="picturesDataGrid" ItemsSource="{Binding Scraps}">
+		<xcad:DockingManager AllowMixedOrientation="True">
+
+			<xcad:DockingManager.DocumentHeaderTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{Binding IconSource}" Margin="0,0,4,0"/>
+						<TextBlock Text="{Binding Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</xcad:DockingManager.DocumentHeaderTemplate>
+
+			<xcad:LayoutRoot>
+
+				<xcad:LayoutPanel Orientation="Horizontal">
+					<xcad:LayoutDocumentPane>
+						<xcad:LayoutDocument CanClose="False" CanFloat="False">
+							<ListView x:Name="picturesDataGrid" ItemsSource="{Binding Scraps}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<WrapPanel Width="{Binding ActualWidth, Mode=OneWay}" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+
+								<ListView.ItemTemplate>
+									<DataTemplate>
+										<Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="200" Height="220">
+
+											<Grid.RowDefinitions>
+												<RowDefinition Height="auto" MaxHeight="200"/>
+												<RowDefinition Height="20"/>
+											</Grid.RowDefinitions>
+											
+											<Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center"  Stretch="UniformToFill"/>
+											<TextBlock Grid.Row="1" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+										</Grid>
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</xcad:LayoutDocument>
+					</xcad:LayoutDocumentPane>
+				</xcad:LayoutPanel>
+
+				<xcad:LayoutRoot.RightSide>
+					<xcad:LayoutAnchorSide>
+						<xcad:LayoutAnchorGroup>
+							<xcad:LayoutAnchorable Title="Properties" ContentId="properties" AutoHideWidth="300">
+								<xctk:PropertyGrid NameColumnWidth="110" SelectedObject="{Binding ElementName=picturesDataGrid, Path=SelectedItem}"/>
+							</xcad:LayoutAnchorable>
+						</xcad:LayoutAnchorGroup>
+					</xcad:LayoutAnchorSide>
+				</xcad:LayoutRoot.RightSide>
+			</xcad:LayoutRoot>
+		</xcad:DockingManager>
+
+		<!--<ListView x:Name="picturesDataGrid" ItemsSource="{Binding Scraps}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Width="{Binding ActualWidth, Mode=OneWay}" />
@@ -37,8 +94,8 @@
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
-		</ListView>
+		</ListView>-->
 
 	</Grid>
-	
+
 </UserControl>

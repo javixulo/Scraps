@@ -11,9 +11,9 @@
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
 		mc:Ignorable="d"
-		Height="500"
-		Width="800"
-		MinWidth="700"
+		Height="600"
+		Width="1000"
+		MinWidth="800"
 		MinHeight="500"
         Title="Picture Manager" WindowStartupLocation="CenterScreen">
 

@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="Event Type" Height="500" Width="400"
 		d:DataContext="{d:DesignInstance Type=local:EventWindow}"
-		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+		DataContext="{Binding RelativeSource={RelativeSource Self}}"
+		WindowStartupLocation="CenterScreen">
+	
 	<Window.Resources>
 
 		<ResourceDictionary>
