@@ -49,5 +49,19 @@ namespace Scraps.UI
 
 			PicturesControl.Scraps = new ObservableCollection<Scrap>(context.Picture.Local.Select(x => new Scrap(x)));
 		}
+
+		private void OnEventsControlLoaded(object sender, RoutedEventArgs e)
+		{
+			PicManagerContext context = (Application.Current as App).Context;
+
+			context.EventTyped.Load();
+			context.EventType.Load();
+			context.Picture.Load();
+			context.PictureEvent.Load();
+
+			context.Event.Load();
+
+			EventsControl.Events = context.Event.Local.ToObservableCollection();
+		}
 	}
 }

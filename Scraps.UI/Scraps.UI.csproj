@@ -288,10 +288,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EventsControls\EventListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="EventsControls\EventsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -362,9 +358,6 @@
     </Compile>
     <Compile Include="Controls\TagPanel.xaml.cs">
       <DependentUpon>TagPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EventsControls\EventListControl.xaml.cs">
-      <DependentUpon>EventListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventsControls\EventsControl.xaml.cs">
       <DependentUpon>EventsControl.xaml</DependentUpon>

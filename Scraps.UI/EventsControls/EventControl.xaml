@@ -64,6 +64,10 @@
 				<Label Content="End Date:"/>
 				<DatePicker SelectedDate="{Binding Event.EndDate}" />
 			</StackPanel>
+			
+			<!--<Button Content="Icon"  Click="OnAddIconClick" />
+
+			<Image Source="{Binding Event.Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"  Stretch="UniformToFill" />-->
 
 			<Grid>
 
@@ -73,6 +77,8 @@
 							<RowDefinition Height="*" />
 							<RowDefinition Height="auto" />
 						</Grid.RowDefinitions>
+
+
 
 						<controls:TagPanel x:Name="TypesPanel" Grid.Row="0" Loaded="OnTypesPanelLoaded" />
 

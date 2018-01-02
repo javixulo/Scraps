@@ -1,7 +1,9 @@
-﻿using Scraps.Model;
+﻿using Microsoft.Win32;
+using Scraps.Model;
 using Scraps.UI.PicturesControls;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,5 +114,20 @@ namespace Scraps.UI.EventsControls
 			context.SaveChanges();
 		}
 
+		private void OnAddIconClick(object sender, RoutedEventArgs e)
+		{
+			var dlg = new OpenFileDialog
+			{
+				DefaultExt = ".png",
+				Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All files (*.*)|*.*"
+			};
+
+			bool? result = dlg.ShowDialog();
+
+			if (result == true)
+			{
+				Event.Icon = File.ReadAllBytes(dlg.FileName);
+			}
+		}
 	}
 }

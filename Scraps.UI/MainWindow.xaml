@@ -55,7 +55,7 @@
 					</StackPanel>
 				</TabItem.Header>
 
-				<eventsControls:EventsControl />
+				<eventsControls:EventsControl x:Name="EventsControl" Loaded="OnEventsControlLoaded"/>
 
 			</TabItem>
 

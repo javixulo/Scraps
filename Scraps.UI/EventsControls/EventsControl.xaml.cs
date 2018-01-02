@@ -1,33 +1,29 @@
 ﻿using Scraps.Model;
-using System.Data.Entity;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Scraps.UI.EventsControls
 {
     public partial class EventsControl : UserControl
     {
-        public EventsControl()
+		public static readonly DependencyProperty EventsProperty = DependencyProperty.Register("Events", typeof(ObservableCollection<Event>), typeof(EventsControl));
+
+		public ObservableCollection<Event> Events
+		{
+			get => (ObservableCollection<Event>)GetValue(EventsProperty);
+			set => SetValue(EventsProperty, value);
+		}
+
+		public EventsControl()
         {
             InitializeComponent();
         }
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			CollectionViewSource viewSource = ((CollectionViewSource)(FindResource("source")));
-
-			PicManagerContext context = (Application.Current as App).Context;
-
-			context.EventTyped.Load();
-			context.EventType.Load();
-			context.Picture.Load();
-			context.PictureEvent.Load();
-
-			context.Event.Load();
-
-			viewSource.Source = context.Event.Local.ToObservableCollection();
 		}
 
 		private void OnDelete(object sender, RoutedEventArgs e)
@@ -59,6 +55,14 @@ namespace Scraps.UI.EventsControls
 
 			EventWindow window = new EventWindow { Event = item };
 			window.ShowDialog();
+		}
+
+		private void OnMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+			{
+				EventDoubleClick(sender, e);
+			}
 		}
 	}
 }
