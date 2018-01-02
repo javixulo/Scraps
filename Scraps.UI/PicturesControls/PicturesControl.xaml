@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+			  xmlns:xcpt="http://schemas.xceed.com/wpf/xaml/themes"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="300" d:DesignWidth="300"
 			 d:DataContext="{d:DesignInstance Type=local:PicturesControl}"
@@ -41,7 +42,7 @@
 
 				<xcad:LayoutPanel Orientation="Horizontal">
 					<xcad:LayoutDocumentPane>
-						<xcad:LayoutDocument CanClose="False" CanFloat="False">
+						<xcad:LayoutDocument CanClose="False" CanFloat="False" Title="All pictures" >
 							<ListView x:Name="picturesDataGrid" ItemsSource="{Binding Scraps}">
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
@@ -79,22 +80,6 @@
 				</xcad:LayoutRoot.RightSide>
 			</xcad:LayoutRoot>
 		</xcad:DockingManager>
-
-		<!--<ListView x:Name="picturesDataGrid" ItemsSource="{Binding Scraps}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel Width="{Binding ActualWidth, Mode=OneWay}" />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="200" Height="220">
-						<Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="200" Stretch="UniformToFill"/>
-						<TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="20"/>
-					</StackPanel>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>-->
 
 	</Grid>
 

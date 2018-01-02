@@ -32,10 +32,24 @@
 
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="250"/>
 		</Grid.ColumnDefinitions>
 
-		<StackPanel>
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+
+			<picturescontrols:PicturesControl  x:Name="PicturesControl"/>
+
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<!--<TextBox Name="NameBox" Width="100"/>-->
+				<Button Content="Add" Click="OnAddPicturesClick"/>
+			</StackPanel>
+		</Grid>
+
+		<StackPanel Grid.Column="1">
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Name:"/>
 				<TextBox Text="{Binding Event.Name}" Width="200" />
@@ -74,23 +88,14 @@
 
 		</StackPanel>
 
+
+
+
+
 		<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
 			<!--<TextBox Name="NameBox" Width="100"/>-->
 			<Button Content="Save" Click="OnSaveClick"/>
 		</StackPanel>
 
-		<Grid Grid.Column="2">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
-
-			<picturescontrols:PicturesControl  x:Name="PicturesControl"/>
-
-			<StackPanel Grid.Row="1" Orientation="Horizontal">
-				<!--<TextBox Name="NameBox" Width="100"/>-->
-				<Button Content="Add" Click="OnAddPicturesClick"/>
-			</StackPanel>
-		</Grid>
 	</Grid>
 </UserControl>
