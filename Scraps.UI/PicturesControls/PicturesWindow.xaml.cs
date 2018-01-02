@@ -1,5 +1,4 @@
-﻿using Scraps.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -8,15 +7,15 @@ namespace Scraps.UI.PicturesControls
 {
 	public partial class PicturesWindow : Window
 	{
-		public static readonly DependencyProperty PicturesProperty = DependencyProperty.Register("Pictures", typeof(ObservableCollection<Picture>), typeof(PicturesWindow));
+		public static readonly DependencyProperty PicturesProperty = DependencyProperty.Register("Scraps", typeof(ObservableCollection<Scrap>), typeof(PicturesWindow));
 
-		public ObservableCollection<Picture> Pictures
+		public ObservableCollection<Scrap> Scraps
 		{
-			get => PicturesControl.Pictures;
-			set => PicturesControl.Pictures = value;
+			get => PicturesControl.Scraps;
+			set => PicturesControl.Scraps = value;
 		}
 
-		public IEnumerable<Picture> SelectedItems { get => PicturesControl.picturesDataGrid.SelectedItems.OfType<Picture>(); }
+		public IEnumerable<Scrap> SelectedItems { get => PicturesControl.picturesDataGrid.SelectedItems.OfType<Scrap>(); }
 
 		public PicturesWindow()
 		{

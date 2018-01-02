@@ -30,14 +30,8 @@ namespace Scraps.UI.EventsControls
 				Event = new Event();
 				return;
 			}
-
-			PicturesControl.Pictures = new ObservableCollection<Picture>();
-
-			foreach (var pictureEvent in Event.PictureEvent.Select(x => x.PictureNavigation))
-			{
-				PicturesControl.Pictures.Add(pictureEvent);
-			}
-
+			
+			PicturesControl.Scraps = new ObservableCollection<Scrap>(Event.PictureEvent.Select(x => new Scrap(x.PictureNavigation)));
 		}
 
 		private void OnTypesPanelLoaded(object sender, RoutedEventArgs e)
@@ -56,13 +50,13 @@ namespace Scraps.UI.EventsControls
 		{
 			PicturesWindow window = new PicturesWindow();
 
-			window.Pictures = new ObservableCollection<Picture>((Application.Current as App).Context.Picture.Local.Except(PicturesControl.Pictures));
+			window.Scraps = new ObservableCollection<Scrap>(((Application.Current as App).Context.Picture.Local.Except(PicturesControl.Scraps.Select(x => x.Picture))).Select(x => new Scrap(x)));
 
 			window.ShowDialog();
 
-			foreach (Picture picture in window.SelectedItems)
+			foreach (var scrap in window.SelectedItems)
 			{
-				PicturesControl.Pictures.Add(picture);
+				PicturesControl.Scraps.Add(scrap);
 			}
 		}
 
@@ -100,9 +94,12 @@ namespace Scraps.UI.EventsControls
 
 			context.SaveChanges();
 
-			foreach (Picture item in PicturesControl.Pictures)
+			if (PicturesControl.Scraps != null)
 			{
-				context.PictureEvent.Add(new PictureEvent { Event = Event.Id, Picture = item.Id });
+				foreach (Picture item in PicturesControl.Scraps.Select(x => x.Picture))
+				{
+					context.PictureEvent.Add(new PictureEvent { Event = Event.Id, Picture = item.Id });
+				}
 			}
 
 			if (Event.Id == default(long))

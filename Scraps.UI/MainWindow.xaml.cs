@@ -1,6 +1,7 @@
 ﻿using Scraps.Lib;
 using Scraps.Model;
 using Scraps.UI.Controls;
+using Scraps.UI.PicturesControls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -46,9 +47,7 @@ namespace Scraps.UI
 
 			if (changes) context.SaveChanges();
 
-			var list = context.Picture.Local.ToObservableCollection();
-
-			PicturesControl.Pictures = list;
+			PicturesControl.Scraps = new ObservableCollection<Scrap>(context.Picture.Local.Select(x => new Scrap(x)));
 		}
 	}
 }

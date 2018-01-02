@@ -12,10 +12,6 @@ namespace Scraps.UI
 		public App()
 		{
 			((App)Application.Current).Context = new PicManagerContext(ConfigurationManager.ConnectionStrings[1].ConnectionString);
-
-
-
-			//	var javi = ((App)Application.Current).Context.IncludedFolder.ToList();
 		}
 	}
 
