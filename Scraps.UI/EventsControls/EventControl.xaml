@@ -14,83 +14,73 @@
 			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
 			 Loaded="OnLoaded">
 
-	<UserControl.Resources>
+    <UserControl.Resources>
 
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="../Dictionary.xaml" />
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
-	</UserControl.Resources>
+    </UserControl.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-		<StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<Label Content="Name:"/>
-				<TextBox Text="{Binding Event.Name}" Width="200" />
-			</StackPanel>
+        <StackPanel Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Name:"/>
+                <TextBox Text="{Binding Event.Name}" Width="200" />
+            </StackPanel>
 
-			<StackPanel Orientation="Horizontal">
-				<Label Content="Start Date:"/>
-				<DatePicker SelectedDate="{Binding Event.StartDate}" />
-			</StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Start Date:"/>
+                <DatePicker SelectedDate="{Binding Event.StartDate}" />
+            </StackPanel>
 
-			<StackPanel Orientation="Horizontal">
-				<Label Content="End Date:"/>
-				<DatePicker SelectedDate="{Binding Event.EndDate}" />
-			</StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="End Date:"/>
+                <DatePicker SelectedDate="{Binding Event.EndDate}" />
+            </StackPanel>
 
-			<Grid>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-				<GroupBox Header="Types">
-					<Grid >
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="auto" />
-						</Grid.RowDefinitions>
+                <Label Content="Types:"/>
+                <local:EventTypesControl x:Name="TypesGrid" Grid.Row="2" Loaded="OnTypesGridLoaded"/>
+            </Grid>
 
-						<controls:TagPanel x:Name="TypesPanel" Grid.Row="0" Loaded="OnTypesPanelLoaded" />
+        </StackPanel>
 
-						<StackPanel Grid.Row="1" Orientation="Horizontal">
-							<Button Content="Add"  Click="OnAddTypeClick" />
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <!--<TextBox Name="NameBox" Width="100"/>-->
+            <Button Content="Save" Click="OnSaveClick"/>
+        </StackPanel>
 
-						</StackPanel>
-					</Grid>
-				</GroupBox>
+        <Grid Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
+            <picturescontrols:PicturesControl  x:Name="PicturesControl"/>
 
-			</Grid>
-
-		</StackPanel>
-
-		<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
-			<!--<TextBox Name="NameBox" Width="100"/>-->
-			<Button Content="Save" Click="OnSaveClick"/>
-		</StackPanel>
-
-		<Grid Grid.Column="2">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
-
-			<picturescontrols:PicturesControl  x:Name="PicturesControl"/>
-
-			<StackPanel Grid.Row="1" Orientation="Horizontal">
-				<!--<TextBox Name="NameBox" Width="100"/>-->
-				<Button Content="Add" Click="OnAddPicturesClick"/>
-			</StackPanel>
-		</Grid>
-	</Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <!--<TextBox Name="NameBox" Width="100"/>-->
+                <Button Content="Add" Click="OnAddPicturesClick"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>

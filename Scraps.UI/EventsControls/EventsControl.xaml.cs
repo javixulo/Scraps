@@ -28,7 +28,10 @@ namespace Scraps.UI.EventsControls
 			context.Event.Load();
 
 			viewSource.Source = context.Event.Local.ToObservableCollection();
-		}
+
+            this.eventsDataGrid.ItemsSource = context.Event.ToList();
+
+        }
 
 		private void OnDelete(object sender, RoutedEventArgs e)
 		{
@@ -60,5 +63,10 @@ namespace Scraps.UI.EventsControls
 			EventWindow window = new EventWindow { Event = item };
 			window.ShowDialog();
 		}
-	}
+
+        private void eventsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
 }

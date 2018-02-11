@@ -17,5 +17,10 @@ namespace Scraps.UI.EventsControls
 		{
 			InitializeComponent();
 		}
-	}
+
+        private void EventControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }
