@@ -1,18 +1,17 @@
 ﻿using Scraps.Model;
 using System.Data.Entity;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Scraps.UI.EventsControls
 {
-    public partial class EventsControl : UserControl
-    {
-        public EventsControl()
-        {
-            InitializeComponent();
-        }
+	public partial class EventsControl : UserControl
+	{
+		public EventsControl()
+		{
+			InitializeComponent();
+		}
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
@@ -59,6 +58,11 @@ namespace Scraps.UI.EventsControls
 
 			EventWindow window = new EventWindow { Event = item };
 			window.ShowDialog();
+		}
+
+		private void eventsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
 		}
 	}
 }

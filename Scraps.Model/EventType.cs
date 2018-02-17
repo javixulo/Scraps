@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Scraps.Model
 {
-    public partial class EventType : IEquatable<EventType>
+	public partial class EventType : IEquatable<EventType>
 	{
-        public EventType()
-        {
-            EventTyped = new HashSet<EventTyped>();
-        }
+		public EventType()
+		{
+			EventTyped = new HashSet<EventTyped>();
+		}
 
 		[Key]
-        public string Name { get; set; }
+		public string Name { get; set; }
 
-        public virtual ICollection<EventTyped> EventTyped { get; set; }
+		public virtual ICollection<EventTyped> EventTyped { get; set; }
 
 		public override bool Equals(object obj)
 		{

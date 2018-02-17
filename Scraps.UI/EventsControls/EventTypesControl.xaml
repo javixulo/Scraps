@@ -37,12 +37,13 @@
 		</Grid.ColumnDefinitions>
 
 		<DataGrid x:Name="eventTypesDataGrid" 
-		          ItemsSource="{Binding Items}"
+		          ItemsSource="{Binding Source={StaticResource source}}"
 		          AutoGenerateColumns="False"
 				  CanUserAddRows="False"
 				  CanUserDeleteRows="True"
 				  SelectionMode="Extended" 
-				  SelectionUnit="FullRow">
+				  SelectionUnit="FullRow"
+				  SelectedValue="{Binding SelectedTypes}">
 
 			<DataGrid.Columns>
 				<DataGridCheckBoxColumn Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Header="" Width="30"  IsThreeState="False" />

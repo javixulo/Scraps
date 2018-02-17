@@ -1,7 +1,9 @@
-﻿using Scraps.Model;
+﻿using Microsoft.Win32;
+using Scraps.Model;
 using Scraps.UI.PicturesControls;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +13,7 @@ namespace Scraps.UI.EventsControls
 	public partial class EventControl : UserControl
 	{
 		public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(Event), typeof(EventControl));
+		public PicManagerContext Context = (Application.Current as App).Context;
 
 		public Event Event
 		{
@@ -32,88 +35,82 @@ namespace Scraps.UI.EventsControls
 			}
 
 			PicturesControl.Pictures = new ObservableCollection<Picture>();
-
-			foreach (var pictureEvent in Event.PictureEvent.Select(x => x.PictureNavigation))
+			
+			foreach(var pictureEvent in Event.PictureEvent.Select(x=>x.PictureNavigation))
 			{
 				PicturesControl.Pictures.Add(pictureEvent);
 			}
-
+			
 		}
 
-		private void OnTypesPanelLoaded(object sender, RoutedEventArgs e)
+		private void OnTypesGridLoaded(object sender, RoutedEventArgs e)
 		{
-			PicManagerContext context = (Application.Current as App).Context;
-
 			var types = Event.EventTyped.Select(x => x.TypeNavigation);
-
-			foreach (EventType type in types)
-			{
-				TypesPanel.AddTag(type.Name, type);
-			}
+			
+			TypesGrid.SetSelectedTypes(types);
 		}
 
 		private void OnAddPicturesClick(object sender, RoutedEventArgs e)
 		{
 			PicturesWindow window = new PicturesWindow();
+			PicturesControl.Pictures = new ObservableCollection<Picture>();
+			string imagesBaseDirectory = ConfigurationManager.AppSettings["ImagesBaseDirectory"];
 
-			window.Pictures = new ObservableCollection<Picture>((Application.Current as App).Context.Picture.Local.Except(PicturesControl.Pictures));
-
-			window.ShowDialog();
-
-			foreach (Picture picture in window.SelectedItems)
+			OpenFileDialog openFileDialog = new OpenFileDialog
 			{
-				PicturesControl.Pictures.Add(picture);
-			}
-		}
+				Filter = ConfigurationManager.AppSettings["AllowedImageTypes"],
+				FilterIndex = 1,
+				Multiselect = true
+			};
 
-		private void OnAddTypeClick(object sender, RoutedEventArgs e)
-		{
-			PicManagerContext context = (Application.Current as App).Context;
-			context.EventType.Load();
+			bool? userClickedOK = openFileDialog.ShowDialog();
 
-			EventTypesWindow window = new EventTypesWindow();
-			window.Items = new ObservableCollection<EventType>(context.EventType.Local.Except(TypesPanel.Tags.Select(x => x.Object).OfType<EventType>()));
-			window.ShowDialog();
-
-			foreach (EventType type in window.SelectedItems)
+			if (userClickedOK == true)
 			{
-				TypesPanel.AddTag(type.Name, type);
+				foreach (string fileName in openFileDialog.FileNames)
+				{
+					File.Copy(fileName, imagesBaseDirectory + Path.GetFileName(fileName), true);
+					Picture picture = new Picture
+					{
+						FileName = Path.GetFileName(fileName),
+						Folder = imagesBaseDirectory
+					};
+					PicturesControl.Pictures.Add(picture);
+					Context.Picture.Add(picture);
+				}
 			}
 		}
 
 		private void OnSaveClick(object sender, RoutedEventArgs e)
 		{
-			PicManagerContext context = (Application.Current as App).Context;
+			if (Event.Id == default(long))
+			{
+				Context.Event.Add(Event);
+			}
 
 			foreach (var item in Event.EventTyped)
-				context.EventTyped.Remove(item);
+				Context.EventTyped.Remove(item);
 
-			context.SaveChanges();
+			Context.SaveChanges();
 
-			foreach (EventType item in TypesPanel.Tags.Select(x => x.Object).OfType<EventType>())
+			foreach (EventType item in TypesGrid.eventTypesDataGrid.SelectedItems)
 			{
-				context.EventTyped.Add(new EventTyped { Event = Event.Id, Type = item.Name });
+				Context.EventTyped.Add(new EventTyped { Event = Event.Id, Type = item.Name });
 			}
 
 			foreach (var item in Event.PictureEvent)
-				context.PictureEvent.Remove(item);
+				Context.PictureEvent.Remove(item);
 
-			context.SaveChanges();
+			Context.SaveChanges();
 
 			foreach (Picture item in PicturesControl.Pictures)
 			{
-				context.PictureEvent.Add(new PictureEvent { Event = Event.Id, Picture = item.Id });
+				Context.PictureEvent.Add(new PictureEvent { Event = Event.Id, Picture = item.Id });
 			}
 
-			if (Event.Id == default(long))
-			{
-				// it is a new one
-				context = (Application.Current as App).Context;
-				context.Event.Add(Event);
-			}
+			Context.SaveChanges();
 
-			context.SaveChanges();
+			Window.GetWindow(this).Close();
 		}
-
 	}
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
 			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="490"
 			 Height="Auto" Width="Auto"
 			 Loaded="OnLoaded">
 
@@ -35,7 +35,7 @@
 		          ItemsSource="{Binding Source={StaticResource source}}"
 		          AutoGenerateColumns="False"
 				  MouseDoubleClick="EventDoubleClick" CanUserAddRows="False"
-				  IsReadOnly="True">
+				  IsReadOnly="True" SelectionChanged="eventsDataGrid_SelectionChanged">
 
 			<DataGrid.Columns>
 				<DataGridTextColumn  Width="*" Header="Name" Binding="{Binding Name}"/>
