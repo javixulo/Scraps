@@ -1,18 +1,17 @@
 ﻿using Scraps.Model;
 using System.Data.Entity;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Scraps.UI.EventsControls
 {
-    public partial class EventsControl : UserControl
-    {
-        public EventsControl()
-        {
-            InitializeComponent();
-        }
+	public partial class EventsControl : UserControl
+	{
+		public EventsControl()
+		{
+			InitializeComponent();
+		}
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
@@ -28,10 +27,7 @@ namespace Scraps.UI.EventsControls
 			context.Event.Load();
 
 			viewSource.Source = context.Event.Local.ToObservableCollection();
-
-            this.eventsDataGrid.ItemsSource = context.Event.ToList();
-
-        }
+		}
 
 		private void OnDelete(object sender, RoutedEventArgs e)
 		{
@@ -64,9 +60,9 @@ namespace Scraps.UI.EventsControls
 			window.ShowDialog();
 		}
 
-        private void eventsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+		private void eventsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
 
-        }
-    }
+		}
+	}
 }

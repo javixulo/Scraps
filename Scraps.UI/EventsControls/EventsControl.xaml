@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
 			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="489.076"
+             d:DesignHeight="300" d:DesignWidth="490"
 			 Height="Auto" Width="Auto"
 			 Loaded="OnLoaded">
 

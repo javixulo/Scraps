@@ -29,7 +29,6 @@ namespace Scraps.UI.EventsControls
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
 			CollectionViewSource viewSource = ((CollectionViewSource)(FindResource("source")));
-
 			PicManagerContext context = (Application.Current as App).Context;
 
 			context.EventType.Load();
@@ -62,6 +61,5 @@ namespace Scraps.UI.EventsControls
 			context.SaveChanges();
 			NameBox.Text = string.Empty;
 		}
-
 	}
 }
