@@ -30,7 +30,6 @@ namespace Scraps.UI.EventsControls
 			if (Event == null)
 			{
 				Event = new Event();
-				return;
 			}
 			
 			PicturesControl.Scraps = new ObservableCollection<Scrap>(Event.PictureEvent.Select(x => new Scrap(x.PictureNavigation)));
