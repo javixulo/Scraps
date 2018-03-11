@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scraps.UI.PicturesControls"
         mc:Ignorable="d"
-        Title="PicturesWindow" Height="300" Width="300">
+		
+        Title="Pictures" Height="700" Width="900">
 
 	<Window.Resources>
 

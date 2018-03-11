@@ -5,7 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
 			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model" 
+			  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+			  xmlns:xcpt="http://schemas.xceed.com/wpf/xaml/themes"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+			 d:DataContext="{d:DesignInstance Type=local:EventsControl}"
+			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300"
 			 Height="Auto" Width="Auto"
 			 Loaded="OnLoaded">
@@ -16,13 +22,9 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="../Dictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
-
-			<CollectionViewSource x:Key="source" d:DesignSource="{d:DesignInstance {x:Type DataModel:Event}, CreateList=True}"/>
 		</ResourceDictionary>
 
 	</UserControl.Resources>
-
-
 
 	<Grid>
 
@@ -31,32 +33,32 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<DataGrid x:Name="eventsDataGrid" 
-		          ItemsSource="{Binding Source={StaticResource source}}"
-		          AutoGenerateColumns="False"
-				  MouseDoubleClick="EventDoubleClick" CanUserAddRows="False"
-				  IsReadOnly="True">
+		<ListView x:Name="eventsDataGrid" ItemsSource="{Binding Events}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Width="{Binding ActualWidth, Mode=OneWay}" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
 
-			<DataGrid.Columns>
-				<DataGridTextColumn  Width="*" Header="Name" Binding="{Binding Name}"/>
-				<DataGridTextColumn  Width="*" Header="Start Date" Binding="{Binding StartDate}"/>
-				<DataGridTextColumn  Width="*" Header="End Date" Binding="{Binding EndDate}"/>
-				<DataGridTemplateColumn Header="Delete">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button
-									Content="X"
-									Click="OnDelete"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-			</DataGrid.Columns>
-		</DataGrid>
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="300" Height="320">
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto" MaxHeight="300"/>
+							<RowDefinition Height="20"/>
+						</Grid.RowDefinitions>
+
+						<Image Source="{Binding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" MouseDown="OnMouseDown" />
+						<TextBlock Grid.Row="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal">
-			<!--<TextBox Name="NameBox" Width="100"/>-->
 			<Button Content="New" Click="OnAddClick"/>
 		</StackPanel>
 	</Grid>
-	
+
 </UserControl>

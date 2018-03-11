@@ -1,6 +1,7 @@
 ﻿using Scraps.Lib;
 using Scraps.Model;
 using Scraps.UI.Controls;
+using Scraps.UI.PicturesControls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -46,9 +47,21 @@ namespace Scraps.UI
 
 			if (changes) context.SaveChanges();
 
-			var list = context.Picture.Local.ToObservableCollection();
+			PicturesControl.Scraps = new ObservableCollection<Scrap>(context.Picture.Local.Select(x => new Scrap(x)));
+		}
 
-			PicturesControl.Pictures = list;
+		private void OnEventsControlLoaded(object sender, RoutedEventArgs e)
+		{
+			PicManagerContext context = (Application.Current as App).Context;
+
+			context.EventTyped.Load();
+			context.EventType.Load();
+			context.Picture.Load();
+			context.PictureEvent.Load();
+
+			context.Event.Load();
+
+			EventsControl.Events = context.Event.Local.ToObservableCollection();
 		}
 	}
 }

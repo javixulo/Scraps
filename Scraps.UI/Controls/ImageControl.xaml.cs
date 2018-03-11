@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using Scraps.Lib;
 
@@ -15,16 +16,16 @@ namespace Scraps.UI.Controls
 			get => (string)GetValue(ImagePathProperty);
 			set => SetValue(ImagePathProperty, value);
 		}
-		
+
 		private static void OnImagePathChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
 		{
 			var imageControl = (ImageControl)dependencyObject;
 
-			var bmImg = ImageHelper.GetImage(eventArgs.NewValue.ToString(), imageControl.Height, imageControl.Width);
-			
+			var bmImg = ImageHelper.GetImage(eventArgs.NewValue.ToString(), Convert.ToInt32(imageControl.Width), Convert.ToInt32(imageControl.Height));
+
 			imageControl.Image.Source = bmImg;
 		}
-		
+
 
 		public ImageControl()
 		{
@@ -40,10 +41,10 @@ namespace Scraps.UI.Controls
 			if (PropertyChanged != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
-		
+
 
 		#endregion
 	}
 
-	
+
 }

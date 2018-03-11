@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=System">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/JX.WPFToolkit;component/Dictionaries/BaseDictionary.xaml" />
+		<!--<ResourceDictionary Source="/JX.WPFToolkit;component/Dictionaries/BaseDictionary.xaml" />-->
 	</ResourceDictionary.MergedDictionaries>
 
 	<Color x:Key="MainColorDark">#3C3C3C</Color>
@@ -71,61 +71,6 @@
 
 	</Style>
 
-	<Style BasedOn="{StaticResource StyleBaseControl}" TargetType="DataGrid" >
 
-		<Setter Property="Margin" Value="10" />
-		<Setter Property="Padding" Value="10" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="BorderBrush" Value="{StaticResource MainColorBrush}" />
-
-	
-		<Setter Property="EnableRowVirtualization" Value="True" />
-		<Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected" />
-		<Setter Property="CanUserDeleteRows" Value="False" />
-		<Setter Property="SelectionMode" Value="Single" />
-		<Setter Property="SelectionUnit" Value="FullRow" />
-		<Setter Property="AlternatingRowBackground" Value="{StaticResource DetailColorLightBrush}" />
-		<Setter Property="RowBackground" Value="White" />
-		<Setter Property="HorizontalGridLinesBrush" Value="{StaticResource DetailColorDarkBrush}" />
-		<Setter Property="VerticalGridLinesBrush" Value="White" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-		<Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-
-	</Style>
-
-	<Style TargetType="{x:Type DataGridColumnHeader}">
-
-		<Setter Property="Background" Value="MidnightBlue"/>
-		<Setter Property="BorderBrush" Value="White"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Foreground" Value="White" />
-		<Setter Property="FontWeight" Value="Bold" />
-		<Setter Property="FontSize" Value="16" />
-		<Setter Property="Height" Value="25" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Padding" Value="10 0 10 0"/>
-
-	</Style>
-
-	<Style TargetType="{x:Type DataGridRow}">
-		<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Height" Value="auto" />
-
-	</Style>
-
-	<Style TargetType="{x:Type DataGridCell}">
-
-		<!--<Setter Property="Height" Value="25"/>-->
-		<Setter Property="Padding" Value="10 0 10 0"/>
-		<Setter Property="FontSize" Value="16" />
-		<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-
-	</Style>
-
-	<!-- EndRegion -->
 
 </ResourceDictionary>

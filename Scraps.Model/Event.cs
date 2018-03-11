@@ -17,8 +17,11 @@ namespace Scraps.Model
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public long? Location { get; set; }
+        public byte[] Icon { get; set; }
 
-        public virtual ICollection<EventTyped> EventTyped { get; set; }
+		public virtual ICollection<EventTyped> EventTyped { get; set; }
         public virtual ICollection<PictureEvent> PictureEvent { get; set; }
+
+
     }
 }
