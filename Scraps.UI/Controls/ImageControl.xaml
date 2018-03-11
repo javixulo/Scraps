@@ -10,7 +10,7 @@
 			 Width="300">
 
 
-	<Image Name="Image" />
+	<Image Name="Image" Stretch="UniformToFill" />
 
 
 </UserControl>

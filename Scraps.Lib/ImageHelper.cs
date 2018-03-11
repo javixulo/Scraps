@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Encoder = System.Drawing.Imaging.Encoder;
@@ -16,8 +13,7 @@ namespace Scraps.Lib
 	public static class ImageHelper
 	{
 		public const int OrientationId = 0x0112;
-
-
+		
 		public static ExifOrientations ImageOrientation(Image img)
 		{
 			// Get the index of the orientation property.
@@ -32,35 +28,13 @@ namespace Scraps.Lib
 			return (ExifOrientations)item.Value[0];
 		}
 
-		public static BitmapImage GetImage(string file)
+		public static BitmapImage GetImage(string file, int maxWidth,int maxHeight )
 		{
 			Image image = Image.FromFile(file);
 
-			Rotate(image);
+			var (width, height) = GetNewSize(image, maxWidth, maxHeight);
 
-			image = image.GetThumbnailImage(300, 300, () => false, IntPtr.Zero);
-
-			var bitMap = new BitmapImage();
-			using (MemoryStream memStream2 = new MemoryStream())
-			{
-				image.Save(memStream2, ImageFormat.Png);
-				memStream2.Position = 0;
-				bitMap.BeginInit();
-				bitMap.CacheOption = BitmapCacheOption.OnLoad;
-				bitMap.UriSource = null;
-
-				bitMap.StreamSource = memStream2;
-				bitMap.EndInit();
-
-			}
-			return bitMap;
-		}
-
-		public static ImageSource GetImage(string file, double height, double width)
-		{
-			Image image = Image.FromFile(file);
-
-			image = resizeImage(image, (int) width, (int) height);
+			image = resizeImage(image, maxWidth, maxHeight);
 
 		//	image = image.GetThumbnailImage((int)width, (int)height, null, IntPtr.Zero);
 
@@ -74,8 +48,8 @@ namespace Scraps.Lib
 				bitMap.BeginInit();
 				bitMap.CacheOption = BitmapCacheOption.OnLoad;
 				bitMap.UriSource = null;
-				bitMap.DecodePixelWidth = (int)Math.Round(width);
-				bitMap.DecodePixelHeight = (int)Math.Round(height);
+				bitMap.DecodePixelWidth = width;
+				bitMap.DecodePixelHeight = height;
 				bitMap.StreamSource = memStream2;
 				bitMap.EndInit();
 
@@ -83,7 +57,7 @@ namespace Scraps.Lib
 			return bitMap;
 		}
 
-		private static void Rotate(Image image)
+		public static void Rotate(Image image)
 		{
 			switch (ImageOrientation(image))
 			{
@@ -130,11 +104,8 @@ namespace Scraps.Lib
 		//set the compression level. higher compression = better quality = bigger images
 		static long compressionLevel = 80L;
 
-		public static Image resizeImage(Image image, int maxWidth, int maxHeight)
+		public static Image resizeImage(Image image, int width, int height)
 		{
-			int newWidth;
-			int newHeight;
-
 			//first we check if the image needs rotating (eg phone held vertical when taking a picture for example)
 			foreach (var prop in image.PropertyItems)
 			{
@@ -146,27 +117,11 @@ namespace Scraps.Lib
 					break;
 				}
 			}
-
+			
 			//apply the padding to make a square image
 
-			//check if the with or height of the image exceeds the maximum specified, if so calculate the new dimensions
-			if (image.Width > maxWidth || image.Height > maxHeight)
-			{
-				double ratioX = (double)maxWidth / image.Width;
-				double ratioY = (double)maxHeight / image.Height;
-				double ratio = Math.Min(ratioX, ratioY);
-
-				newWidth = (int)(image.Width * ratio);
-				newHeight = (int)(image.Height * ratio);
-			}
-			else
-			{
-				newWidth = image.Width;
-				newHeight = image.Height;
-			}
-
 			//start the resize with a new image
-			Bitmap newImage = new Bitmap(newWidth, newHeight);
+			Bitmap newImage = new Bitmap(width, height);
 
 			//set the new resolution
 			newImage.SetResolution(imageResolution, imageResolution);
@@ -181,7 +136,7 @@ namespace Scraps.Lib
 				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+				graphics.DrawImage(image, 0, 0, width, height);
 			}
 
 			//save the image to a memorystream to apply the compression level
@@ -200,8 +155,28 @@ namespace Scraps.Lib
 			return newImage;
 		}
 
+		public static (int width, int height) GetNewSize(Image image, int width, int height)
+		{
+			int newWidth, newHeight;
 
+			if (image.Width > width || image.Height > height)
+			{
+				double ratioX = (double)width / image.Width;
+				double ratioY = (double)height / image.Height;
+				double ratio = Math.Min(ratioX, ratioY);
 
+				newWidth = (int)(image.Width * ratio);
+				newHeight = (int)(image.Height * ratio);
+			}
+			else
+			{
+				newWidth = image.Width;
+				newHeight = image.Height;
+			}
+
+			return (newWidth, newHeight);
+		}
+		
 		//=== get encoder info
 		private static ImageCodecInfo getEncoderInfo(string mimeType)
 		{

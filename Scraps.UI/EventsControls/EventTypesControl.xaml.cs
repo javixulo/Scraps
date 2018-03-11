@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -11,6 +12,14 @@ namespace Scraps.UI.EventsControls
 {
 	public partial class EventTypesControl : UserControl
 	{
+		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(ObservableCollection<EventType>), typeof(EventTypesControl));
+
+		public ObservableCollection<EventType> Items
+		{
+			get => (ObservableCollection<EventType>)GetValue(ItemsProperty);
+			set => SetValue(ItemsProperty, value);
+		}
+
 		public EventTypesControl()
 		{
 			InitializeComponent();
@@ -28,13 +37,7 @@ namespace Scraps.UI.EventsControls
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			CollectionViewSource viewSource = ((CollectionViewSource)(FindResource("source")));
-
-			PicManagerContext context = (Application.Current as App).Context;
-
-			context.EventType.Load();
-
-			viewSource.Source = context.EventType.Local.ToObservableCollection();
+			
 		}
 
 		private void OnDelete(object sender, RoutedEventArgs e)
