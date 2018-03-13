@@ -42,5 +42,40 @@ namespace Scraps.Lib
 
 			return result;
 		}
+
+		public static void RenameFiles(IFileSystem system, IEnumerable<string> files, string pattern, IEnumerable<string> tokens)
+		{
+			Dictionary<string, string> nameSubstitution = SubstituteNames(files, pattern, tokens);
+
+			var existent = nameSubstitution.Values.Where(x => system.File.Exists(x));
+
+			if (existent.Any())
+			{
+				throw new ApplicationException($"Files {string.Join(", ", existent)} already exist");
+			}
+
+			foreach(var newName in nameSubstitution)
+			{
+				system.File.Move(newName.Key, newName.Value);
+			}
+		}
+
+		private static Dictionary<string, string> SubstituteNames(IEnumerable<string> files, string pattern, IEnumerable<string> tokens)
+		{
+			var result = new Dictionary<string, string>();
+
+			foreach(string file in files)
+			{
+				result.Add(file, GetSubstitutedFileName(file, pattern, tokens));
+			}
+
+			return result;
+		}
+
+		private static string GetSubstitutedFileName(string file, string pattern, IEnumerable<string> tokens)
+		{
+			return Path.Combine(string.Format(pattern, tokens), Path.GetFileName(file));
+		}
+
 	}
 }

@@ -1,16 +1,13 @@
-﻿using Scraps.Lib.Extensions;
-using Scraps.Model;
-using System.Collections.Generic;
+﻿using Scraps.Model;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Scraps.Lib;
 
 namespace Scraps.UI.PicturesControls
 {
-	public partial class PicturesControl : UserControl
+	public partial class PicturesControl
 	{
 		public static readonly DependencyProperty ScrapsProperty = DependencyProperty.Register("Scraps", typeof(ObservableCollection<Scrap>), typeof(PicturesControl));
 
@@ -37,14 +34,6 @@ namespace Scraps.UI.PicturesControls
 		{
 
 		}
-
-		private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (picturesDataGrid.SelectedItem == null)
-				return;
-
-			SetCurrentValue(SelectedImageProperty, ((Scrap)picturesDataGrid.SelectedItem));
-		}
 	}
 
 	public class Scrap
@@ -56,7 +45,7 @@ namespace Scraps.UI.PicturesControls
 		public Scrap(Picture picture)
 		{
 			Picture = picture;
-			Image = picture.GetImage(200, 200);
+			Image = ImageHelper.GetImage(picture.FullName, 200, 200);
 		}
 	}
 }

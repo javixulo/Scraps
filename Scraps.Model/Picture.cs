@@ -19,6 +19,7 @@ namespace Scraps.Model
 		public string Folder { get; set; }
 		public string FileName { get; set; }
 		public long? Location { get; set; }
+		public DateTime? Date { get; set; }
 
 		[NotMapped]
 		public string FullName => Path.Combine(Folder, FileName);
@@ -44,15 +45,9 @@ namespace Scraps.Model
 			return 2108858624 + Id.GetHashCode();
 		}
 
-		public bool IsSameFile(string folder, string fileName)
-		{
-			return Folder.Equals(folder, System.StringComparison.InvariantCultureIgnoreCase)
-				&& FileName.Equals(FileName, System.StringComparison.InvariantCultureIgnoreCase);
-		}
-
 		public bool IsSameFile(string file)
 		{
-			return FullName.Equals(file, System.StringComparison.InvariantCultureIgnoreCase);
+			return FullName.Equals(file, StringComparison.InvariantCultureIgnoreCase);
 		}
 
 	}

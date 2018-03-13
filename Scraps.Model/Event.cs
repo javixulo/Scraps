@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Scraps.Model
@@ -14,14 +15,12 @@ namespace Scraps.Model
 		[Key]
 		public long Id { get; set; }
         public string Name { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public long? Location { get; set; }
         public byte[] Icon { get; set; }
 
 		public virtual ICollection<EventTyped> EventTyped { get; set; }
         public virtual ICollection<PictureEvent> PictureEvent { get; set; }
-
-
     }
 }
