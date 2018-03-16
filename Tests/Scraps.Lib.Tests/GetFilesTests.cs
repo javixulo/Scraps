@@ -145,35 +145,4 @@ namespace Scraps.Lib.Tests
 			Assert.AreEqual(@"c:\demo\image.gif", files[2]);
 		}
 	}
-
-	[TestClass]
-	public class RenameFilesTests
-	{
-		[TestMethod]
-		public void RenameFilesSimpleTest()
-		{
-			const string pattern = @"c:\test\";
-
-			var files = new List<string>
-			{
-				@"c:\myfile.txt"
-			};
-
-			var tokens = new List<string>
-			{
-				""
-			};
-
-			var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-			{
-				{ files[0], new MockFileData("Testing is meh.") }
-			});
-
-			FileHelper.RenameFiles(fileSystem, files, pattern, tokens);
-
-			Assert.AreEqual(1, files.Count);
-
-			Assert.AreEqual(@"c:\test\myfile.txt", files[0]);
-		}
-	}
 }

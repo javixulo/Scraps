@@ -54,6 +54,14 @@ namespace Scraps.Lib
 				throw new ApplicationException($"Files {string.Join(", ", existent)} already exist");
 			}
 
+			var nonExistentFolder = nameSubstitution.Values.Select(x => Path.GetDirectoryName(x)).Distinct().Where(x=> !system.Directory.Exists(x));
+
+			foreach (string folder in nonExistentFolder)
+			{
+				system.Directory.CreateDirectory(folder);
+			}
+
+
 			foreach(var newName in nameSubstitution)
 			{
 				system.File.Move(newName.Key, newName.Value);

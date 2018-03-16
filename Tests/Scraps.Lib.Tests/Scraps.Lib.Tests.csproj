@@ -230,6 +230,7 @@
     <Compile Include="GetFileNameTests.cs" />
     <Compile Include="GetFilesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameFilesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
