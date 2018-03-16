@@ -46,7 +46,7 @@ namespace Scraps.Lib
 			return result;
 		}
 
-		public static void RenameFiles(IFileSystem system, IEnumerable<string> files, string pattern, Dictionary<string, string> tokens)
+		public static Dictionary<String, string> RenameFiles(IFileSystem system, IEnumerable<string> files, string pattern, Dictionary<string, string> tokens)
 		{
 			Dictionary<string, string> nameSubstitution = SubstituteNames(files, pattern, tokens);
 
@@ -63,15 +63,16 @@ namespace Scraps.Lib
 			{
 				system.Directory.CreateDirectory(folder);
 			}
-
-
+			
 			foreach (var newName in nameSubstitution)
 			{
 				system.File.Move(newName.Key, newName.Value);
 			}
+
+			return nameSubstitution;
 		}
 
-		private static Dictionary<string, string> SubstituteNames(IEnumerable<string> files, string pattern, Dictionary<string, string> tokens)
+		public static Dictionary<string, string> SubstituteNames(IEnumerable<string> files, string pattern, Dictionary<string, string> tokens)
 		{
 			var result = new Dictionary<string, string>();
 
@@ -94,7 +95,7 @@ namespace Scraps.Lib
 
 			if (allMatchResults.Count > 0)
 			{
-				throw new ApplicationException($"Parameters not set: {string.Join(", ", allMatchResults.Cast<Match>().Select(x=>x.Value))}");
+				throw new ApplicationException($"Parameters not set: {string.Join(", ", allMatchResults.Cast<Match>().Select(x => x.Value))}");
 			}
 
 			return Path.Combine(pattern, Path.GetFileName(file));

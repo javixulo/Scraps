@@ -256,6 +256,7 @@
     <Compile Include="PictureGroup.cs" />
     <Compile Include="PictureTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Tag.cs" />
   </ItemGroup>
   <ItemGroup>

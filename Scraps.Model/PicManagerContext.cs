@@ -16,6 +16,7 @@ namespace Scraps.Model
         public virtual DbSet<PictureEvent> PictureEvent { get; set; }
         public virtual DbSet<PictureGroup> PictureGroup { get; set; }
         public virtual DbSet<PictureTag> PictureTag { get; set; }
+        public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
 
 		// Unable to generate entity type for table 'Settings'. Please see the warning messages.
@@ -151,7 +152,13 @@ namespace Scraps.Model
                     .HasForeignKey(d => d.Tag);
             });
 
-            modelBuilder.Entity<Tag>(entity =>
+	        modelBuilder.Entity<Settings>(entity =>
+	        {
+		        entity.HasKey(e => e.Key)
+			        .HasName("sqlite_autoindex_Settings_1");
+	        });
+
+			modelBuilder.Entity<Tag>(entity =>
             {
                 entity.HasKey(e => e.Name)
                     .HasName("sqlite_autoindex_Tag_1");
