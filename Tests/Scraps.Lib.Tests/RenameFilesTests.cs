@@ -128,10 +128,6 @@ namespace Scraps.Lib.Tests
 			});
 
 			FileHelper.RenameFiles(fileSystem, files, pattern, new Dictionary<string, string>());
-
-			Assert.AreEqual(1, fileSystem.AllFiles.Count());
-
-			Assert.AreEqual(@"c:\test1\value1\myfile.txt", fileSystem.AllFiles.First());
 		}
 	}
 }
