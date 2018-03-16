@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Scraps.Lib
 {
 	public static class FileHelper
 	{
+		private static readonly Regex ParametersRegex = new Regex(@"<\w*>", RegexOptions.Compiled);
+
 		public static List<string> GetFiles(IFileSystem system, string folder, IEnumerable<string> searchPatterns = null, IEnumerable<string> foldersToExclude = null)
 		{
 			var files = new List<string>();
@@ -86,7 +89,14 @@ namespace Scraps.Lib
 			{
 				pattern = pattern.Replace($"<{token.Key}>", token.Value);
 			}
-			
+
+			MatchCollection allMatchResults = ParametersRegex.Matches(pattern);
+
+			if (allMatchResults.Count > 0)
+			{
+				throw new ApplicationException($"Parameters not set: {string.Join(", ", allMatchResults.Cast<Match>().Select(x=>x.Value))}");
+			}
+
 			return Path.Combine(pattern, Path.GetFileName(file));
 		}
 
