@@ -111,6 +111,33 @@ namespace Scraps.Lib.Tests
 			Assert.AreEqual(@"c:\test1\value1 value 2\value3 - test\myfile.txt", fileSystem.AllFiles.First());
 		}
 
+		[TestMethod]
+		public void RenameFilesWithEmptyTokenSimpleTest()
+		{
+			const string pattern = @"c:\test1\<token1>";
+
+			var files = new List<string>
+			{
+				@"c:\myfile.txt"
+			};
+
+			var tokens = new Dictionary<string, string>
+			{
+				{"token1", ""}
+			};
+
+			var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+			{
+				{ files[0], new MockFileData("Testing is meh.") }
+			});
+
+			FileHelper.RenameFiles(fileSystem, files, pattern, tokens);
+
+			Assert.AreEqual(1, fileSystem.AllFiles.Count());
+
+			Assert.AreEqual(@"c:\test1\myfile.txt", fileSystem.AllFiles.First());
+		}
+
 		[ExpectedException(typeof(ApplicationException))]
 		[TestMethod]
 		public void RenameFilesSubstituteTokenThrowsExceptionIfTokenDoesNotHaveValueTest()
