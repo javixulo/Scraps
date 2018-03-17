@@ -17,6 +17,9 @@ namespace Scraps.Model.Other
 				if (value.IndexOfAny(Path.GetInvalidPathChars()) != -1)
 					throw new ApplicationException($"Invalid characters (any of {string.Join(", ", Path.GetInvalidPathChars())}) found in directory name: '{value}'");
 
+				if (!Directory.Exists(value))
+					throw new ApplicationException($"Directory doesn't exist: '{value}'");
+
 				_dbSettings.First(x => x.Key == "RootFolder").Value = value;
 				_rootFoler = value;
 			}
