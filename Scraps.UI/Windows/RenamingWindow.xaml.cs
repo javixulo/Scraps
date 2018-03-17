@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using Scraps.Lib;
 using Scraps.Model;
+using Scraps.Model.Other;
 using Xceed.Wpf.Toolkit;
 using Xceed.Wpf.Toolkit.Core;
 using MessageBox = System.Windows.MessageBox;
@@ -55,9 +56,9 @@ namespace Scraps.UI.Windows
 		{
 			NamesBefore = @event.PictureEvent.Select(x => x.PictureNavigation).Select(x => x.FullName).ToList();
 
-			Settings rootFolderSetting = (Application.Current as App).Context.Settings.First();
+			string rootFoler = new ScrapsSettings((Application.Current as App).Context.Settings).RootFoler;
 
-			_pattern = $@"{rootFolderSetting.Value}\<event.name>";
+			_pattern = $@"{rootFoler}\<event.name>";
 			_tokens = new Dictionary<string, string>
 			{
 				{"event.name", @event.Name}
