@@ -1,16 +1,20 @@
-﻿using Microsoft.Win32;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Win32;
 using Scraps.Model;
 using Scraps.UI.PicturesControls;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using Scraps.Lib;
+using Scraps.UI.Windows;
 
 namespace Scraps.UI.EventsControls
 {
-	public partial class EventControl : UserControl
+	public partial class EventControl
 	{
 		public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(Event), typeof(EventControl));
 
@@ -31,14 +35,12 @@ namespace Scraps.UI.EventsControls
 			{
 				Event = new Event();
 			}
-			
+
 			PicturesControl.Scraps = new ObservableCollection<Scrap>(Event.PictureEvent.Select(x => new Scrap(x.PictureNavigation)));
 		}
 
 		private void OnTypesPanelLoaded(object sender, RoutedEventArgs e)
 		{
-			PicManagerContext context = (Application.Current as App).Context;
-
 			var types = Event.EventTyped.Select(x => x.TypeNavigation);
 
 			foreach (EventType type in types)
@@ -51,7 +53,7 @@ namespace Scraps.UI.EventsControls
 		{
 			PicturesWindow window = new PicturesWindow();
 
-			window.Scraps = new ObservableCollection<Scrap>(((Application.Current as App).Context.Picture.Local.Except(PicturesControl.Scraps.Select(x => x.Picture))).Select(x => new Scrap(x)));
+			window.Scraps = new ObservableCollection<Scrap>((Application.Current as App).Context.Picture.Local.Except(PicturesControl.Scraps.Select(x => x.Picture)).Select(x => new Scrap(x)));
 
 			window.ShowDialog();
 
@@ -127,6 +129,12 @@ namespace Scraps.UI.EventsControls
 			{
 				Event.Icon = File.ReadAllBytes(dlg.FileName);
 			}
+		}
+
+		private void OnRenameClick(object sender, RoutedEventArgs e)
+		{
+			RenamingWindow renamingWindow = new  RenamingWindow(Event);
+			renamingWindow.ShowDialog();
 		}
 	}
 }

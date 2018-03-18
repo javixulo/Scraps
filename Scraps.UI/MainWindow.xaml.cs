@@ -1,8 +1,6 @@
 ﻿using Scraps.Lib;
 using Scraps.Model;
-using Scraps.UI.Controls;
 using Scraps.UI.PicturesControls;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.IO;
@@ -39,7 +37,15 @@ namespace Scraps.UI
 				{
 					if (!context.Picture.Any(x => x.IsSameFile(file)))
 					{
-						context.Picture.Add(new Picture { Folder = Path.GetDirectoryName(file), FileName = Path.GetFileName(file) });
+						ImageProperties properties = new ImageProperties(file);
+
+						context.Picture.Add(new Picture
+						{
+							Folder = Path.GetDirectoryName(file),
+							FileName = Path.GetFileName(file),
+							Date = properties.TakenDate
+						});
+
 						changes = true;
 					}
 				}

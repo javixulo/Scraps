@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scraps.UI.EventsControls"
-			 xmlns:DataModel="clr-namespace:Scraps.Model;assembly=Scraps.Model"
 			 xmlns:controls="clr-namespace:Scraps.UI.Controls"
 			 xmlns:picturescontrols="clr-namespace:Scraps.UI.PicturesControls"
 			 mc:Ignorable="d" 
@@ -49,7 +48,7 @@
 			</StackPanel>
 		</Grid>
 
-		<StackPanel Grid.Column="1">
+		<StackPanel Grid.Row="0" Grid.Column="1">
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Name:"/>
 				<TextBox Text="{Binding Event.Name}" Width="200" />
@@ -78,13 +77,10 @@
 							<RowDefinition Height="auto" />
 						</Grid.RowDefinitions>
 
-
-
 						<controls:TagPanel x:Name="TypesPanel" Grid.Row="0" Loaded="OnTypesPanelLoaded" />
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal">
 							<Button Content="Add"  Click="OnAddTypeClick" />
-
 						</StackPanel>
 					</Grid>
 				</GroupBox>
@@ -98,9 +94,11 @@
 
 
 
-		<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+		<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal">
 			<!--<TextBox Name="NameBox" Width="100"/>-->
 			<Button Content="Save" Click="OnSaveClick"/>
+			<Button Content="Rename"  Click="OnRenameClick" />
+
 		</StackPanel>
 
 	</Grid>
