@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace Scraps.UI.Windows
 {
 	public partial class RenamingWindow : INotifyPropertyChanged
 	{
+		private readonly Event _event;
 		private List<string> _namesBefore;
 		private List<string> _namesAfter;
 
@@ -54,6 +56,7 @@ namespace Scraps.UI.Windows
 
 		public RenamingWindow(Event @event)
 		{
+			_event = @event;
 			NamesBefore = @event.PictureEvent.Select(x => x.PictureNavigation).Select(x => x.FullName).ToList();
 
 			string rootFoler = new ScrapsSettings((Application.Current as App).Context.Settings).RootFoler;
@@ -96,7 +99,18 @@ namespace Scraps.UI.Windows
 
 			try
 			{
-				FileHelper.RenameFiles(new FileSystem(), NamesBefore, _pattern, _tokens);
+				Dictionary<string, string> renamedFiles = FileHelper.RenameFiles(new FileSystem(), NamesBefore, _pattern, _tokens);
+
+				foreach (Picture picture in _event.PictureEvent.Select(x=> x.PictureNavigation))
+				{
+					string newFullName = renamedFiles[picture.FullName];
+
+					picture.Folder = Path.GetDirectoryName(newFullName);
+					picture.FileName = Path.GetFileName(newFullName);
+				}
+
+				(Application.Current as App).Context.SaveChanges();
+
 				Result = "Operation successful :)";
 			}
 			catch (Exception exception)
