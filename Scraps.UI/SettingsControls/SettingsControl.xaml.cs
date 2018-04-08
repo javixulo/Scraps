@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using Scraps.Model;
 using Scraps.Model.Other;
 
 namespace Scraps.UI.SettingsControls
@@ -53,6 +55,39 @@ namespace Scraps.UI.SettingsControls
 			}
 		}
 
+		private void CreateDBFile(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+				if (result != System.Windows.Forms.DialogResult.OK)
+					return;
+
+				string fileName = Path.Combine(dialog.SelectedPath, "Scraps.db");
+				string newConnString = $"Data Source={fileName}";
+
+				//TODO add (1) and so forth if the name exists
+
+				((App)Application.Current).Context = new PicManagerContext(newConnString);
+				((App) Application.Current).Context.Database.EnsureCreated();
+
+				DBFile.Text = fileName;
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.ConnectionStrings.ConnectionStrings[1].ConnectionString = newConnString;
+				config.Save(ConfigurationSaveMode.Modified, true);
+				ConfigurationManager.RefreshSection("connectionStrings");
+
+				RaisePropertyChanged(nameof(Settings));
+			}
+
+		
+
+	
+			
+			
+		}
+
 		private void BrowseRootFolderPath(object sender, RoutedEventArgs e)
 		{
 			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -100,6 +135,7 @@ namespace Scraps.UI.SettingsControls
 				handler(this, e);
 			}
 		}
+
 
 		#endregion
 

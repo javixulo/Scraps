@@ -14,6 +14,12 @@ namespace Scraps.Model.Other
 			get => _rootFoler;
 			set
 			{
+				if (string.IsNullOrEmpty(value))
+				{
+					_rootFoler = string.Empty;
+					return;
+				}
+
 				if (value.IndexOfAny(Path.GetInvalidPathChars()) != -1)
 					throw new ApplicationException($"Invalid characters (any of {string.Join(", ", Path.GetInvalidPathChars())}) found in directory name: '{value}'");
 
@@ -28,7 +34,7 @@ namespace Scraps.Model.Other
 		public ScrapsSettings (IQueryable<Settings> dbSettings)
 		{
 			_dbSettings = dbSettings;
-			RootFoler = dbSettings.First(x => x.Key == "RootFolder").Value;
+			RootFoler = dbSettings.FirstOrDefault(x => x.Key == "RootFolder")?.Value;
 		}
 	}
 }
